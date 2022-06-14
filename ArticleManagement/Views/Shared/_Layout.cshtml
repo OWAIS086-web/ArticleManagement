@@ -263,22 +263,22 @@
                 <ul class="nav">
                     @if (User.IsInRole("Admin") == true)
                     {
-        <li class="nav-item">
+                <li class="nav-item">
 
-            <a class="nav-link" href="@Url.Action("Dashboard", "Admin")">
-                <i class="typcn typcn-device-desktop menu-icon"></i>
-                <span class="menu-title">Dashboard</span>
-            </a>
-        </li> }
-                    else
-                    {
-        <li class="nav-item">
+                    <a class="nav-link" href="@Url.Action("Dashboard", "Admin")">
+                        <i class="typcn typcn-device-desktop menu-icon"></i>
+                        <span class="menu-title">Dashboard</span>
+                    </a>
+                </li> }
+                            else
+                            {
+                <li class="nav-item">
 
-            <a class="nav-link" href="@Url.Action("Dashboard", "Dispatcher")">
-                <i class="typcn typcn-device-desktop menu-icon"></i>
-                <span class="menu-title">Dashboard</span>
-            </a>
-        </li>}
+                    <a class="nav-link" href="@Url.Action("Dashboard", "Dispatcher")">
+                        <i class="typcn typcn-device-desktop menu-icon"></i>
+                        <span class="menu-title">Dashboard</span>
+                    </a>
+                </li>}
 
 
 
@@ -287,24 +287,20 @@
                     {
 
 
-        <li class="nav-item">
-            <a class="nav-link" href="@Url.Action("Index", "User")">
-                <i class="mdi mdi-account-settings menu-icon"></i>
-                <span class="menu-title">Users</span>
-            </a>
-        </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="@Url.Action("Index", "User")">
+                        <i class="mdi mdi-account-settings menu-icon"></i>
+                        <span class="menu-title">Users</span>
+                    </a>
+                </li>
 
-                        <li class="nav-item">
-                            <a class="nav-link" href="@Url.Action("Index", "Role")">
-                                <i class="mdi mdi-account-card-details menu-icon"></i>
-                                <span class="menu-title">Roles</span>
-                            </a>
-                        </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="@Url.Action("Index", "Role")">
+                                        <i class="mdi mdi-account-card-details menu-icon"></i>
+                                        <span class="menu-title">Roles</span>
+                                    </a>
+                                </li>}
 
-
-                    }
-                                                                    
-                
 
 
                     <li class="nav-item">
