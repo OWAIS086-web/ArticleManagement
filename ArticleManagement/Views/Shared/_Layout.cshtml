@@ -41,13 +41,13 @@
                    
                     @if (User.IsInRole("Admin") == true)
                         {
-        <a class="navbar-brand brand-logo" href="@Url.Action("Dashboard", "Admin")" style="color:white;">Articlopedia<!--<img src="images/logo.svg" alt="logo"/>--></a>
-                        <a class="navbar-brand brand-logo-mini" href="@Url.Action("Dashboard", "Admin")" style="color:white;">AM<!--<img src="images/logo-mini.svg" alt="logo"/>--></a> }
+        <a class="navbar-brand brand-logo" href="@Url.Action("Dashboard", "Admin")" style="color:white;"><img style=" height: 71px; width: 150px; " src="~/Content/template/images/1-4.png" alt="logo"/></a>
+                        <a class="navbar-brand brand-logo-mini" href="@Url.Action("Dashboard", "Admin")" style="color:white;"><img style=" height: 71px; width: 150px; " src="~/Content/template/images/1-4.png" alt="logo"/></a> }
                         else
                         {
                         
-                <a class="navbar-brand brand-logo" style="color:white;">Articlopedia<!--<img src="images/logo.svg" alt="logo"/>--></a>
-                        <a class="navbar-brand brand-logo-mini" style="color:white;">AM<!--<img src="images/logo-mini.svg" alt="logo"/>--></a>}
+                <a class="navbar-brand brand-logo" style="color:white;"><img src="~/Content/template/images/1-4.png" alt="logo"/></a>
+                        <a class="navbar-brand brand-logo-mini" style="color:white;"><img src="~/Content/template/images/1-4.png" alt="logo"/></a>}
                     
                     <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
                         <span class="typcn typcn-th-menu"></span>
@@ -295,11 +295,25 @@
                 </li>
 
                                 <li class="nav-item">
-                                    <a class="nav-link" href="@Url.Action("Index", "Role")">
-                                        <i class="mdi mdi-account-card-details menu-icon"></i>
-                                        <span class="menu-title">Roles</span>
+                                    <a class="nav-link" href="@Url.Action("Index", "Article")">
+                                        <i class="mdi mdi-printer-settings menu-icon"></i>
+                                        <span class="menu-title">Article</span>
                                     </a>
-                                </li>}
+                                </li>
+
+                                                <li class="nav-item">
+                                                    <a class="nav-link" href="@Url.Action("Index", "BlogTitle")">
+                                                        <i class="mdi mdi-credit-card-settings menu-icon"></i>
+                                                        <span class="menu-title">Blog Title</span>
+                                                    </a>
+                                                </li>
+
+                                                                <li class="nav-item">
+                                                                    <a class="nav-link" href="@Url.Action("Index", "Role")">
+                                                                        <i class="mdi mdi-account-card-details menu-icon"></i>
+                                                                        <span class="menu-title">Roles</span>
+                                                                    </a>
+                                                                </li>}
 
 
 

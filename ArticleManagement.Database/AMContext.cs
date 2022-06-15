@@ -21,5 +21,8 @@ namespace ArticleManagement.Database
             return new AMContext();
         }
 
+
+        public DbSet<Article> Articles { get; set; }
+        public DbSet<BlogTitle> BlogTitles { get; set; }
     }
 }

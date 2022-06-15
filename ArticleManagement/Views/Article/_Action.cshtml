@@ -1,0 +1,151 @@
+﻿@model ArticleManagement.ViewModels.ArticleActionViewModel
+
+@if (Model != null)
+{
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">
+                @if (Model.ID != 0)
+                {
+                    <span>Edit Article</span>
+                }
+                else
+                {
+                    <span>Create Article</span>
+                }
+            </h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <form id="actionForm">
+                <input type="hidden" name="ID" value="@Model.ID" />
+                <div class="form-group">
+                    <label>Name</label>
+                    <input class="form-control" name="ArticleName" placeholder="Enter Article Name." value="@Model.ArticleName">
+                </div>
+
+                <div class="form-group">
+                    <label>Select Blog Site Title</label>
+                    <select name="BlogSiteTitle" id="BlogSiteTitle">
+                        @foreach (var item in Model.BlogTitles)
+                        {
+                            if (Model.ID != 0)
+                            {
+                                if (item.TitleName == Model.BlogSiteTitle)
+                                {
+                                    <option selected value="@item.TitleName">@item.TitleName</option>
+                                }
+                                else
+                                {
+                                    <option value="@item.TitleName">@item.TitleName</option>
+
+                                }
+                            }
+                            else
+                            {
+                                <option value="@item.TitleName">@item.TitleName</option>
+
+                            }
+                        }
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Enter Note if Any</label>
+                    <input type="text" class="form-control" name="Note" placeholder="Enter Note" value="@Model.Note">
+                </div>
+
+                <div class="form-group">
+                    <label>Posting Date</label>
+                    @if (Model.ID == 0)
+                    {
+                        @Html.TextBox("PostingDate", DateTime.Now, "{0:yyyy-MM-dd}", new { @style = "width:100%", @id = "PostingDate", @class = "form-control", type = "date" })
+
+                    }
+                    else
+                    {
+                        @Html.TextBox("PostingDate", Model.PostingDate, "{0:yyyy-MM-dd}", new { @style = "width:100%", @id = "PostingDate", @class = "form-control", type = "date" })
+
+                    }
+                </div>
+
+                <div class="form-group">
+                    <label>Select Article File</label>
+                    <input class="form-control" value="@Model.DocURL" name="DocURL" id="DocURL" type="hidden" />
+                    <input class="form-control" id="imageUpload" name="Image" type="file"  />
+                </div>
+
+
+
+            </form>
+
+            <div class="errorDiv">
+
+            </div>
+        </div>
+        <div class="modal-footer">
+            @if (Model.ID != 0)
+            {
+                <button id="actionButton" type="button" class="btn btn-primary"><i class="fas fa-save mr-1"></i> Update</button>
+            }
+            else
+            {
+                <button id="actionButton" type="button" class="btn btn-primary"><i class="fas fa-save mr-1"></i> Save</button>
+            }
+            <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-times mr-1"></i> Close</button>
+        </div>
+    </div>
+}
+
+<script>
+	$("#actionButton").click(function () {
+		$.ajax({
+			url: '@Url.Action("Action", "Article")',
+			type: "post",
+			data: $("#actionForm").serialize()
+		})
+		.done(function () {
+
+            location.reload();
+
+		});
+    });
+
+
+
+                $("#imageUpload").change(function () {
+
+        var element = this;
+        var formData = new FormData();
+
+        var totalFiles = element.files.length;
+
+        for (var i = 0; i < totalFiles; i++) {
+            var file = element.files[i];
+            formData.append("DocURL", file);
+        }
+
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("UploadImage", "Shared")',
+            data: formData,
+            dataType: 'json',
+            contentType: false,
+            processData: false
+        })
+            .done(function (response) {
+
+                console.log(response);
+                if (response.Success) {
+                    $("#DocURL").val(response.DocURL);
+                }
+
+            })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("FAIL");
+            })
+    });
+
+</script>
