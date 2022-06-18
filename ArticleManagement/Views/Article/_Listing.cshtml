@@ -1,6 +1,7 @@
 ﻿@model ArticleManagement.ViewModels.ArticleListingViewModel
 @{
     ViewBag.Title = "Index";
+    float total = 0;
 }
 <div class="row">
 
@@ -13,7 +14,9 @@
                     <table class="table table-striped table-hover">
                         <thead>
                             <tr>
-
+                                <th>
+                                    Copy Writer
+                                </th>
                                 <th>
                                     Article Name
                                 </th>
@@ -25,6 +28,15 @@
                                 </th>
                                 <th>
                                     Note
+                                </th>
+                                <th>
+                                    Words
+                                </th>
+                                <th>
+                                    Pay Per Word
+                                </th>
+                                <th>
+                                   Payment
                                 </th>
                                 <th>
                                     Posting Date
@@ -39,16 +51,23 @@
                             @foreach (var item in Model.Articles)
                             {
                             <tr>
+                                <td>@item.Name</td>
                                 <td>@item.ArticleName</td>
                                 <td>@item.BlogSiteTitle</td>
+
                                 <td>@item.DocURL</td>
                                 <td>@item.Note</td>
-                                <td>@item.PostingDate</td>
-                                <td>
-                                    <button data-href="@Url.Action("Action", "Article", new { ID = item.ID })" type="button" class="data-btn btn btn-info btn-icon-text" data-toggle="modal" data-target="#actionModal"><i class="mdi mdi-pencil"></i> EDIT</button>
-                                    <button data-href="@Url.Action("Delete", "Article", new { ID = item.ID })" type="button" class="data-btn btn btn-danger btn-icon-text" data-toggle="modal" data-target="#actionModal"><i class="mdi mdi-delete"></i>DELETE</button>
+                                <td>@item.Words</td>
+                                <td>@item.PayPerWord</td>
+                                @{total = item.PayPerWord * item.Words;}
+                                <td>@total</td>
+                               
+                            <td>@item.PostingDate</td>
+                            <td>
+                                <button data-href="@Url.Action("Action", "Article", new { ID = item.ID })" type="button" class="data-btn btn btn-info btn-icon-text" data-toggle="modal" data-target="#actionModal"><i class="mdi mdi-pencil"></i> EDIT</button>
+                                <button data-href="@Url.Action("Delete", "Article", new { ID = item.ID })" type="button" class="data-btn btn btn-danger btn-icon-text" data-toggle="modal" data-target="#actionModal"><i class="mdi mdi-delete"></i>DELETE</button>
 
-                                </td>
+                            </td>
                             </tr>
                             }
                         </tbody>

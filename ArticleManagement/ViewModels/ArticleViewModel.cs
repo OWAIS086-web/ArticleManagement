@@ -14,6 +14,7 @@ namespace ArticleManagement.ViewModels
 
     public class ArticleActionViewModel
     {
+        public string Name { get; set; }
         public List<BlogTitle> BlogTitles { get; set; }
         public int ID { get; set; }
         public string DocURL { get; set; }
@@ -21,5 +22,7 @@ namespace ArticleManagement.ViewModels
         public string Note { get; set; }
         public DateTime PostingDate { get; set; }
         public string BlogSiteTitle { get; set; }
+        public float Words { get; set; }
+        public float PayPerWord { get; set; }
     }
 }

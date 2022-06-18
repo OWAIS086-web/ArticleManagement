@@ -3,16 +3,66 @@ using ArticleManagement.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.Office.Interop.Word;
 using System.Web;
 using System.Web.Mvc;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using ArticleManagement.Entities;
+using Microsoft.AspNet.Identity.Owin;
 
 namespace ArticleManagement.Controllers
 {
     public class ArticleController : Controller
     {
+        private AMSignInManager _signInManager;
+        private AMUserManager _userManager;
+        public AMSignInManager SignInManager
+        {
+            get
+            {
+                return _signInManager ?? HttpContext.GetOwinContext().Get<AMSignInManager>();
+            }
+            private set
+            {
+                _signInManager = value;
+            }
+        }
+        public AMUserManager UserManager
+        {
+            get
+            {
+                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<AMUserManager>();
+            }
+            private set
+            {
+                _userManager = value;
+            }
+        }
+
+        private AMRolesManager _rolesManager;
+        public AMRolesManager RolesManager
+        {
+            get
+            {
+                return _rolesManager ?? HttpContext.GetOwinContext().GetUserManager<AMRolesManager>();
+            }
+            private set
+            {
+                _rolesManager = value;
+            }
+        }
+        public ArticleController()
+        {
+        }
+
+
+
+        public ArticleController(AMUserManager userManager, AMSignInManager signInManager)
+        {
+            UserManager = userManager;
+            SignInManager = signInManager;
+        }
         // GET: Article
         public ActionResult Index(string searchterm)
         {
@@ -32,12 +82,15 @@ namespace ArticleManagement.Controllers
             {
                 var article = ArticleServices.Instance.GetArticle(ID);
                 model.ID = article.ID;
+                model.Name = article.Name;
                 model.ArticleName = article.ArticleName;
                 model.BlogSiteTitle = article.BlogSiteTitle;
                 model.DocURL = article.DocURL;
                 model.Note = article.Note;
                 model.PostingDate = article.PostingDate;
-
+            
+                model.Words = article.Words;
+                model.PayPerWord = article.PayPerWord;
             }
             else
             {
@@ -52,33 +105,57 @@ namespace ArticleManagement.Controllers
         {
             JsonResult json = new JsonResult();
             IdentityResult result = null;
-            if (model.ID != 0) //update record
+            try
             {
-                var article = ArticleServices.Instance.GetArticle(model.ID);
+                if (model.ID != 0) //update record
+                {
+                    var article = ArticleServices.Instance.GetArticle(model.ID);
 
-                article.ID = model.ID;
-                article.ArticleName = model.ArticleName;
-                article.BlogSiteTitle = model.BlogSiteTitle;
-                article.DocURL = model.DocURL;
-                article.Note = model.Note;
-                article.PostingDate = model.PostingDate;
+                    article.ID = model.ID;
+                    article.ArticleName = model.ArticleName;
+                    article.BlogSiteTitle = model.BlogSiteTitle;
+                    if (model.DocURL != null)
+                    {
+                        article.DocURL = model.DocURL;
+                    }
+                    article.Note = model.Note;
+                    article.PostingDate = model.PostingDate;
+                    article.Words = model.Words;
+                    article.PayPerWord = model.PayPerWord;
+                    var userID = User.Identity.Name;
+                    var user = UserManager.FindByEmail(userID);
+                    article.Name = user.Name;
+                    ArticleServices.Instance.UpdateArticle(article);
 
-                ArticleServices.Instance.UpdateArticle(article);
+                }
+                else
+                {
+                    var article = new Article();
+                    article.ArticleName = model.ArticleName;
+                    article.BlogSiteTitle = model.BlogSiteTitle;
+                    if (model.DocURL != null)
+                    {
+                        article.DocURL = model.DocURL;
+                    }
+                    article.Note = model.Note;
+                    article.PostingDate = model.PostingDate;
+               
+                    article.Words = model.Words;
+                    article.PayPerWord = model.PayPerWord;
+                    var userID = User.Identity.Name;
+                    var user = UserManager.FindByEmail(userID);
+                    article.Name = user.Name;
+                    ArticleServices.Instance.SaveArticle(article);
+
+                }
 
             }
-            else
+            catch (Exception ex)
             {
-                var article = new Article();
-                article.ArticleName = model.ArticleName;
-                article.BlogSiteTitle = model.BlogSiteTitle;
-                article.DocURL = model.DocURL;
-                article.Note = model.Note;
-                article.PostingDate = model.PostingDate;
 
-                ArticleServices.Instance.SaveArticle(article);
-
+                throw;
             }
-
+          
             return RedirectToAction("Index", "Article");
         }
 

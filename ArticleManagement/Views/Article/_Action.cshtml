@@ -58,6 +58,18 @@
                 </div>
 
                 <div class="form-group">
+                    <label>No of Words</label>
+                    <input type="text" class="form-control" name="Words" placeholder="Enter Words" value="@Model.Words">
+                </div>
+
+
+                <div class="form-group">
+                    <label>Pay Per Word</label>
+                    <input type="text" class="form-control" name="PayPerWord" placeholder="Enter Pay Per Word" value="@Model.PayPerWord">
+                </div>
+
+
+                <div class="form-group">
                     <label>Posting Date</label>
                     @if (Model.ID == 0)
                     {
@@ -74,7 +86,7 @@
                 <div class="form-group">
                     <label>Select Article File</label>
                     <input class="form-control" value="@Model.DocURL" name="DocURL" id="DocURL" type="hidden" />
-                    <input class="form-control" id="imageUpload" name="Image" type="file"  />
+                    <input class="form-control" onchange="getFilePath()" id="imageUpload" name="Image" type="file" />
                 </div>
 
 
@@ -113,12 +125,18 @@
 		});
     });
 
+   
+    
 
 
-                $("#imageUpload").change(function () {
+      $("#imageUpload").change(function () {
 
         var element = this;
-        var formData = new FormData();
+           var formData = new FormData();
+
+
+        
+
 
         var totalFiles = element.files.length;
 
@@ -137,7 +155,6 @@
         })
             .done(function (response) {
 
-                console.log(response);
                 if (response.Success) {
                     $("#DocURL").val(response.DocURL);
                 }
