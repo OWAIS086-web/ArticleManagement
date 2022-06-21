@@ -70,6 +70,18 @@
 
 
                 <div class="form-group">
+                    <label>Focus Keyword</label>
+                    <input type="text" class="form-control" name="FocusKeyWord" placeholder="Enter Focus Keyword" value="@Model.FocusKeyWord">
+                </div>
+
+
+                <div class="form-group">
+                    <label>Keyword Link</label>
+                    <input type="text" class="form-control" name="KeywordLink" placeholder="Enter KeyWord Link" value="@Model.KeywordLink">
+                </div>
+
+
+                <div class="form-group">
                     <label>Posting Date</label>
                     @if (Model.ID == 0)
                     {
@@ -120,13 +132,13 @@
 		})
 		.done(function () {
 
-            location.reload();
+            window.location.href = "@Url.Action("Index","Article")";
 
 		});
     });
 
-   
-    
+
+
 
 
       $("#imageUpload").change(function () {
@@ -135,7 +147,7 @@
            var formData = new FormData();
 
 
-        
+
 
 
         var totalFiles = element.files.length;

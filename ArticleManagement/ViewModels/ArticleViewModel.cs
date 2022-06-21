@@ -24,5 +24,8 @@ namespace ArticleManagement.ViewModels
         public string BlogSiteTitle { get; set; }
         public float Words { get; set; }
         public float PayPerWord { get; set; }
+
+        public string FocusKeyWord { get; set; }
+        public string KeywordLink { get; set; }
     }
 }

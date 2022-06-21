@@ -64,10 +64,21 @@ namespace ArticleManagement.Controllers
             SignInManager = signInManager;
         }
         // GET: Article
-        public ActionResult Index(string searchterm)
+        public ActionResult Index(string searchterm = "")
         {
+
             ArticleListingViewModel model = new ArticleListingViewModel();
-            model.Articles = ArticleServices.Instance.GetArticles(searchterm);
+            if (User.IsInRole("Copywriter") == true)
+            {
+                searchterm = User.Identity.Name;
+                var user = UserManager.FindByEmail(searchterm);
+                model.Articles = ArticleServices.Instance.GetArticlesViaUserName(user.Name);
+
+            }
+            else
+            {
+                model.Articles = ArticleServices.Instance.GetArticles(searchterm);
+            }
             return View(model);
         }
 
@@ -88,7 +99,8 @@ namespace ArticleManagement.Controllers
                 model.DocURL = article.DocURL;
                 model.Note = article.Note;
                 model.PostingDate = article.PostingDate;
-            
+                model.FocusKeyWord = article.FocusKeyWord;
+                model.KeywordLink = article.KeywordLink;
                 model.Words = article.Words;
                 model.PayPerWord = article.PayPerWord;
             }
@@ -98,6 +110,10 @@ namespace ArticleManagement.Controllers
             }
             return PartialView("_Action", model);
         }
+
+
+
+
 
 
         [HttpPost]
@@ -122,6 +138,8 @@ namespace ArticleManagement.Controllers
                     article.PostingDate = model.PostingDate;
                     article.Words = model.Words;
                     article.PayPerWord = model.PayPerWord;
+                    article.FocusKeyWord = model.FocusKeyWord;
+                    article.KeywordLink = model.KeywordLink;
                     var userID = User.Identity.Name;
                     var user = UserManager.FindByEmail(userID);
                     article.Name = user.Name;
@@ -142,6 +160,8 @@ namespace ArticleManagement.Controllers
                
                     article.Words = model.Words;
                     article.PayPerWord = model.PayPerWord;
+                    article.FocusKeyWord = model.FocusKeyWord;
+                    article.KeywordLink = model.KeywordLink;
                     var userID = User.Identity.Name;
                     var user = UserManager.FindByEmail(userID);
                     article.Name = user.Name;
@@ -169,24 +189,34 @@ namespace ArticleManagement.Controllers
         }
 
         [HttpPost]
-        public async Task<JsonResult> Delete(ArticleActionViewModel model)
+        public ActionResult Delete(ArticleActionViewModel model)
         {
 
-            IdentityResult result = null;
-            JsonResult json = new JsonResult();
-
+           
 
             if (model.ID != 0) //we are trying to delete a record
             {
                 var article = ArticleServices.Instance.GetArticle(model.ID);
                 ArticleServices.Instance.DeleteArticle(article.ID);
             }
-            else
-            {
-                json.Data = new { Success = false, Message = "Invalid Role." };
-            }
+           
+            return RedirectToAction("Index", "Article");
+        }
 
-            return json;
+
+
+
+        public FileResult DownloadFile(string fileName)
+        {
+            //Build the File Path.
+          
+            string path = Server.MapPath("~") + fileName;
+
+            //Read the File data into Byte Array.
+            byte[] bytes = System.IO.File.ReadAllBytes(path);
+
+            //Send the File to Download.
+            return File(bytes, "application/octet-stream", fileName);
         }
     }
 }

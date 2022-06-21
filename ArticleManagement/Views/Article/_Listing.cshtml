@@ -21,11 +21,9 @@
                                     Article Name
                                 </th>
                                 <th>
-                                    Blog Site Title
+                                    Site Title
                                 </th>
-                                <th>
-                                    Doc URL
-                                </th>
+
                                 <th>
                                     Note
                                 </th>
@@ -33,14 +31,20 @@
                                     Words
                                 </th>
                                 <th>
-                                    Pay Per Word
+                                    Cost Per Word
+                                </th>
+                              
+                                <th>
+                                    Focus Keyword
                                 </th>
                                 <th>
-                                   Payment
+                                    Link
                                 </th>
                                 <th>
                                     Posting Date
                                 </th>
+
+
 
                                 <th>
                                     Action
@@ -55,19 +59,18 @@
                                 <td>@item.ArticleName</td>
                                 <td>@item.BlogSiteTitle</td>
 
-                                <td>@item.DocURL</td>
                                 <td>@item.Note</td>
                                 <td>@item.Words</td>
                                 <td>@item.PayPerWord</td>
-                                @{total = item.PayPerWord * item.Words;}
-                                <td>@total</td>
-                               
-                            <td>@item.PostingDate</td>
-                            <td>
-                                <button data-href="@Url.Action("Action", "Article", new { ID = item.ID })" type="button" class="data-btn btn btn-info btn-icon-text" data-toggle="modal" data-target="#actionModal"><i class="mdi mdi-pencil"></i> EDIT</button>
-                                <button data-href="@Url.Action("Delete", "Article", new { ID = item.ID })" type="button" class="data-btn btn btn-danger btn-icon-text" data-toggle="modal" data-target="#actionModal"><i class="mdi mdi-delete"></i>DELETE</button>
 
-                            </td>
+                                <td>@item.FocusKeyWord</td>
+                                <td>@item.KeywordLink</td>
+                                <td>@item.PostingDate</td>
+                                <td>
+                                    <button data-href="@Url.Action("Action", "Article", new { ID = item.ID })" type="button" class="data-btn btn btn-info btn-icon-text" data-toggle="modal" data-target="#actionModal"><i class="mdi mdi-pencil"></i> EDIT</button>
+                                    <button data-href="@Url.Action("Delete", "Article", new { ID = item.ID })" type="button" class="data-btn btn btn-danger btn-icon-text" data-toggle="modal" data-target="#actionModal"><i class="mdi mdi-delete"></i>DELETE</button>
+
+                                </td>
                             </tr>
                             }
                         </tbody>

@@ -176,6 +176,7 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\ArticleController.cs" />
     <Compile Include="Controllers\BlogTitleController.cs" />
+    <Compile Include="Controllers\CopywriterController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
@@ -191,6 +192,7 @@
     <Compile Include="ViewModels\AdminViewModel.cs" />
     <Compile Include="ViewModels\ArticleViewModel.cs" />
     <Compile Include="ViewModels\BlogTitleViewModel.cs" />
+    <Compile Include="ViewModels\CopywriterViewModel.cs" />
     <Compile Include="ViewModels\RolesViewModel.cs" />
     <Compile Include="ViewModels\UsersViewModel.cs" />
   </ItemGroup>
@@ -302,6 +304,7 @@
     <Content Include="Content\template\images\lightbox\thumb-v-y-2.jpg" />
     <Content Include="Content\template\images\logo-dark.svg" />
     <Content Include="Content\template\images\logo-mini.svg" />
+    <Content Include="Content\template\images\logo.png" />
     <Content Include="Content\template\images\logo.svg" />
     <Content Include="Content\template\images\Royal Dispatch Logo.png" />
     <Content Include="Content\template\images\samples\1280x768\1.jpg" />
@@ -1240,7 +1243,6 @@
     <Content Include="Views\Role\_Delete.cshtml" />
     <Content Include="Views\User\_UserRoles.cshtml" />
     <Content Include="Views\Account\UserProfile.cshtml" />
-    <Content Include="Views\Admin\PayRoll.cshtml" />
     <Content Include="Views\Article\_Action.cshtml" />
     <Content Include="Views\Article\_Delete.cshtml" />
     <Content Include="Views\Article\_Listing.cshtml" />
@@ -1249,6 +1251,7 @@
     <Content Include="Views\BlogTitle\_Action.cshtml" />
     <Content Include="Views\BlogTitle\_Delete.cshtml" />
     <Content Include="Views\BlogTitle\_Listing.cshtml" />
+    <Content Include="Views\Copywriter\Dashboard.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -34,13 +34,9 @@
 			data: $("#actionForm").serialize()
 		})
 		.done(function (response) {
-			if(response.Success)
-			{
+			
 				window.location.href = "@Url.Action("Index", "BlogTitle")";
-			}
-			else {
-				$(".errorDiv").html(response.Message);
-			}
+			
 		});
 	});
 </script>

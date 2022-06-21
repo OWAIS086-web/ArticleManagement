@@ -17,5 +17,8 @@ namespace ArticleManagement.Entities
         public float Words { get; set; }
         public float PayPerWord { get; set; }
 
+        public string FocusKeyWord { get; set; }
+        public string KeywordLink { get; set; }
+
     }
 }

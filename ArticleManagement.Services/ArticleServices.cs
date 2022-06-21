@@ -52,6 +52,23 @@ namespace ArticleManagement.Services
             return Articles;
         }
 
+        public List<Article> GetArticlesViaUserName(string SearchTerm = "")
+        {
+            List<Article> Articles = null;
+            using (var context = new AMContext())
+            {
+                if (!string.IsNullOrEmpty(SearchTerm))
+                {
+                    Articles = context.Articles.Where(x => x.Name == SearchTerm).ToList();
+                }
+                else
+                {
+                    Articles = context.Articles.ToList();
+                }
+            }
+            return Articles;
+        }
+
 
         public void SaveArticle(Article Article)
         {

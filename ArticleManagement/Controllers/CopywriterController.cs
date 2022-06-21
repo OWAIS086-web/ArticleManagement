@@ -1,8 +1,7 @@
-﻿using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.Owin;
-using ArticleManagement.Services;
+﻿using ArticleManagement.Services;
 using ArticleManagement.ViewModels;
-using ArticleManagement.Entities;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +10,7 @@ using System.Web.Mvc;
 
 namespace ArticleManagement.Controllers
 {
-    public class AdminController : Controller
+    public class CopywriterController : Controller
     {
         private AMSignInManager _signInManager;
         private AMRolesManager _rolesManager;
@@ -49,22 +48,15 @@ namespace ArticleManagement.Controllers
                 _signInManager = value;
             }
         }
-        // GET: Admin
-        public ActionResult Index()
-        {
-            AdminViewModel model = new AdminViewModel();
-            var user = UserManager.FindById(User.Identity.GetUserId());
-            model.Name = user.Name;
-            return View(model);
-        }
-
-
+        // GET: Copywriter
         public ActionResult Dashboard()
         {
-            AdminViewModel model = new AdminViewModel();
-            model.Articles = ArticleServices.Instance.GetArticles();
+            CopywriterViewModel model = new CopywriterViewModel();
+            var user = UserManager.FindById(User.Identity.GetUserId());
+            model.Articles = ArticleServices.Instance.GetArticlesViaUserName(user.Name);
             return View(model);
         }
+
 
 
     }

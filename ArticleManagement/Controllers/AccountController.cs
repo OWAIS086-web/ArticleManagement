@@ -61,13 +61,13 @@ namespace ArticleManagement.Controllers
 
 
 
-        public AccountController(AMUserManager userManager, AMSignInManager signInManager )
+        public AccountController(AMUserManager userManager, AMSignInManager signInManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
         }
 
-   
+
 
         //
         // GET: /Account/Login
@@ -83,7 +83,7 @@ namespace ArticleManagement.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Login(LoginViewModel model, string returnUrl="")
+        public async Task<ActionResult> Login(LoginViewModel model, string returnUrl = "")
         {
             if (!ModelState.IsValid)
             {
@@ -92,7 +92,7 @@ namespace ArticleManagement.Controllers
 
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
-            var user =  await UserManager.FindByEmailAsync(model.Email);
+            var user = await UserManager.FindByEmailAsync(model.Email);
             if (user != null)
             {
                 Session["User"] = user.Name;
@@ -145,7 +145,7 @@ namespace ArticleManagement.Controllers
             if (!ModelState.IsValid)
             {
                 return View(model);
-               
+
             }
 
             // The following code protects for brute force attacks against the two factor codes. 
@@ -153,7 +153,7 @@ namespace ArticleManagement.Controllers
             // will be locked out for a specified amount of time. 
             // You can configure the account lockout settings in IdentityConfig
             //signedUser = UserManager.FindByEmail(model.Email);
-            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent:  model.RememberMe, rememberBrowser: model.RememberBrowser);
+            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent: model.RememberMe, rememberBrowser: model.RememberBrowser);
             switch (result)
             {
                 case SignInStatus.Success:
@@ -187,11 +187,11 @@ namespace ArticleManagement.Controllers
             {
                 var role = await RolesManager.FindByIdAsync(model.RoleID);
                 var user = new User { UserName = model.Email, Email = model.Email, PhoneNumber = model.Contact, Name = model.Name, Role = role.Name, Password = model.Password };
-                
+
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    await UserManager.AddToRoleAsync(user.Id,role.Name);
+                    await UserManager.AddToRoleAsync(user.Id, role.Name);
                     //await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
 
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
@@ -200,13 +200,14 @@ namespace ArticleManagement.Controllers
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-                    return RedirectToAction("Index", "User");
+
+                    return RedirectToAction("", "");
                 }
                 AddErrors(result);
             }
 
             // If we got this far, something failed, redisplay form
-            return RedirectToAction("Index","User");
+            return RedirectToAction("", "");
         }
 
         //
@@ -291,7 +292,7 @@ namespace ArticleManagement.Controllers
                 var result = await UserManager.ResetPasswordAsync(model.ID, token, model.Password);
             }
 
-           
+
 
             user.Id = model.ID;
             user.Name = model.Name;
@@ -529,10 +530,17 @@ namespace ArticleManagement.Controllers
                 return RedirectToAction("Dashboard", "Admin");
 
             }
-            else {
-                return RedirectToAction("Dashboard", "Dispatcher");
+            else if (UserManager.IsInRole(userID, "Copywriter") == true)
+            {
+                return RedirectToAction("Dashboard", "Copywriter");
+            }
+            else
+            {
+                return RedirectToAction("", "");
+
             }
         }
+    
 
         internal class ChallengeResult : HttpUnauthorizedResult
         {

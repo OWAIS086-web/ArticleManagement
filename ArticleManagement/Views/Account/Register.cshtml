@@ -18,7 +18,7 @@
     <!-- inject:css -->
     <link rel="stylesheet" href="~/Content/template/css/vertical-layout-light/style.css">
     <!-- endinject -->
-    <link rel="shortcut icon" href="~/Content/template/images/Royal Dispatch Logo.png" />
+    <link rel="shortcut icon" href="~/Content/template/images/logo.png" />
 </head>
 <style>
 
@@ -35,9 +35,9 @@
             <div class="row w-100 mx-0">
 
                 <div class="col-lg-4 mx-auto">
-                    <div class="auth-form-light text-left py-5 px-4 px-sm-5">
+                    <div style=" color:white; background-color: dodgerblue; " class="auth-form-light text-left py-5 px-4 px-sm-5">
                         <div style="width:300px" class="brand-logo">
-                            <img height="200" width="300" src="~/Content/template/images/Royal Dispatch Logo.png" />
+                            <img src="~/Content/template/images/logo.png" />
                         </div>
                         <h4>Hello! let's get started</h4>
                         <h6 class="font-weight-light">Register New Account.</h6>
@@ -46,11 +46,9 @@
                             {
 
                             <div class="form-group">
-                                <label>Name</label>
-                                <div class="col-md-10">
+                                <label>Email</label>
                                     <input type="email" name="Email" class="form-control" placeholder="Enter Email" />
 
-                                </div>
                             </div>
 
                                 <div class="form-group">
@@ -58,9 +56,8 @@
                                     <input class="form-control" name="Name" placeholder="Enter Full Name.">
                                 </div>
 
-                                <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label">Role</label>
-                                    <div class="col-sm-9">
+                                <div class="form-group ">
+                                    <label>Role</label>
                                         <select name="RoleID" class="form-control">
 
                                             @foreach (var item in Model.Roles)
@@ -73,7 +70,6 @@
 
 
                                         </select>
-                                    </div>
                                 </div>
 
                                 <div class="form-group">
@@ -82,21 +78,18 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Password</label>
-                                    <div class="col-md-10">
                                         <input class="form-control" name="Password" type="password" placeholder="Enter Password.">
-                                    </div>
                                 </div>
                                 <div class="form-group">
                                     <label>Confirm Password</label>
-                                    <div class="col-md-10">
                                         <input class="form-control" name="ConfirmPassword" type="password" placeholder="Enter Password.">
-                                    </div>
                                 </div>
+                                <hr />
                                 <div class="form-group">
                                     <div class="col-md-offset-2 col-md-12">
-                                        <button type="submit" class="btn btn-primary"> Register</button>
+                                        <button type="submit" class="btn btn-primary btn-block"> Register</button>
                                     </div>
-
+                                    <br />
                                     <div class="col-md-offset-2 col-md-12">
                                         <a href="@Url.Action("Login","Account")" class="btn btn-primary"> Login</a>
                                     </div>
