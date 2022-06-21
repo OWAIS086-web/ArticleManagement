@@ -21,6 +21,7 @@
         <div class="modal-body">
             <form id="actionForm">
                 <input type="hidden" name="ID" value="@Model.ID" />
+
                 <div class="form-group">
                     <label>Name</label>
                     <input class="form-control" name="ArticleName" placeholder="Enter Article Name." value="@Model.ArticleName">
@@ -80,6 +81,32 @@
                     <input type="text" class="form-control" name="KeywordLink" placeholder="Enter KeyWord Link" value="@Model.KeywordLink">
                 </div>
 
+
+                <div class="form-group">
+                    <label>Status</label>
+                    <select name="Status" id="Status">
+
+                        @if (Model.ID != 0)
+                        {
+                            if (Model.Status == "Posted")
+                            {
+                                <option selected value="Posted">Posted</option>
+                                <option value="Pending">Pending</option>
+                            }
+                            else
+                            {
+                                <option value="Posted">Posted</option>
+                                <option selected value="Pending">Pending</option>
+                            }
+                        }
+                        else
+                        {
+                            <option  value="Pending">Pending</option>
+                            <option value="Posted">Posted</option>
+                        }
+                        
+                    </select>
+                </div>
 
                 <div class="form-group">
                     <label>Posting Date</label>

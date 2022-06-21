@@ -84,6 +84,9 @@ namespace ArticleManagement.Controllers
 
 
 
+
+
+
         [HttpGet]
         public ActionResult Action(int ID = 0)
         {
@@ -100,9 +103,11 @@ namespace ArticleManagement.Controllers
                 model.Note = article.Note;
                 model.PostingDate = article.PostingDate;
                 model.FocusKeyWord = article.FocusKeyWord;
+                model.Status = article.Status;
                 model.KeywordLink = article.KeywordLink;
                 model.Words = article.Words;
                 model.PayPerWord = article.PayPerWord;
+                
             }
             else
             {
@@ -140,6 +145,7 @@ namespace ArticleManagement.Controllers
                     article.PayPerWord = model.PayPerWord;
                     article.FocusKeyWord = model.FocusKeyWord;
                     article.KeywordLink = model.KeywordLink;
+                    article.Status = model.Status;
                     var userID = User.Identity.Name;
                     var user = UserManager.FindByEmail(userID);
                     article.Name = user.Name;
@@ -157,7 +163,7 @@ namespace ArticleManagement.Controllers
                     }
                     article.Note = model.Note;
                     article.PostingDate = model.PostingDate;
-               
+                    article.Status = "Pending";
                     article.Words = model.Words;
                     article.PayPerWord = model.PayPerWord;
                     article.FocusKeyWord = model.FocusKeyWord;
@@ -204,7 +210,16 @@ namespace ArticleManagement.Controllers
         }
 
 
-
+        public ActionResult Post(int ID)
+        {
+            if (ID != 0)
+            {
+                var article = ArticleServices.Instance.GetArticle(ID);
+                article.Status = "Posted";
+                ArticleServices.Instance.UpdateArticle(article);
+            }
+            return RedirectToAction("Index", "Article");
+        }
 
         public FileResult DownloadFile(string fileName)
         {

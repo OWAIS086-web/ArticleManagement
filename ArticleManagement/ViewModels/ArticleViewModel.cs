@@ -26,6 +26,7 @@ namespace ArticleManagement.ViewModels
         public float PayPerWord { get; set; }
 
         public string FocusKeyWord { get; set; }
+        public string Status { get; set; }
         public string KeywordLink { get; set; }
     }
 }

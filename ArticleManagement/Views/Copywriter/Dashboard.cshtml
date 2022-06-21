@@ -28,10 +28,7 @@
                     <th>
                         Words
                     </th>
-                    <th>
-                        Cost Per Word
-                    </th>
-
+                 
                     <th>
                         Focus Keyword
                     </th>
@@ -42,6 +39,7 @@
                         Posting Date
                     </th>
 
+                    <th>Status</th>
 
 
                     <th>
@@ -55,24 +53,39 @@
 
                     foreach (var item in Model.Articles)
                     {
-                        <tr>
-                            <td>@item.Name</td>
-                            <td>@item.ArticleName</td>
-                            <td>@item.BlogSiteTitle</td>
+                <tr>
+                    <td>@item.Name</td>
+                    <td>@item.ArticleName</td>
+                    <td>@item.BlogSiteTitle</td>
 
-                            <td>@item.Note</td>
-                            <td>@item.Words</td>
-                            <td>@item.PayPerWord</td>
+                    <td>@item.Note</td>
+                    <td>@item.Words</td>
 
-                            <td>@item.FocusKeyWord</td>
-                            <td>@item.KeywordLink</td>
-                            <td>@item.PostingDate</td>
-                            <td>
-                                <button data-href="@Url.Action("Action", "Article", new { ID = item.ID })" type="button" class="data-btn btn btn-info btn-icon-text" data-toggle="modal" data-target="#actionModal"><i class="mdi mdi-pencil"></i> EDIT</button>
-                                <button data-href="@Url.Action("Delete", "Article", new { ID = item.ID })" type="button" class="data-btn btn btn-danger btn-icon-text" data-toggle="modal" data-target="#actionModal"><i class="mdi mdi-delete"></i>DELETE</button>
-                                <a href="@Url.Action("DownloadFile", "Article", new { fileName = item.DocURL })" type="button" class="data-btn btn btn-success btn-icon-text"><i class="mdi mdi-download"></i>DOWNLOAD</a>
-                            </td>
-                        </tr>
+                    <td>@item.FocusKeyWord</td>
+                    <td>@item.KeywordLink</td>
+                    <td>@item.PostingDate</td>
+
+
+                    @if (item.Status == "Posted")
+                    {
+                        <td><label class="badge badge-success">@item.Status</label> </td>
+
+                    }
+                    else
+                    {
+                        <td><label class="badge badge-info">@item.Status</label></td>
+
+                    }
+                    <td>
+                        <button data-href="@Url.Action("Action", "Article", new { ID = item.ID })" type="button" class="data-btn btn btn-info btn-icon-text" data-toggle="modal" data-target="#actionModal"><i class="mdi mdi-pencil"></i> EDIT</button>
+                        <button data-href="@Url.Action("Delete", "Article", new { ID = item.ID })" type="button" class="data-btn btn btn-danger btn-icon-text" data-toggle="modal" data-target="#actionModal"><i class="mdi mdi-delete"></i>DELETE</button>
+                        @if (item.Status != "Posted")
+                        {
+                            <a href="@Url.Action("Post", "Article", new { ID = item.ID })" type="button" class="data-btn btn btn-info btn-icon-text"><i class="mdi mdi-upload"></i>POST</a>
+                    }
+                        <a href="@Url.Action("DownloadFile", "Article", new { fileName = item.DocURL })" type="button" class="data-btn btn btn-success btn-icon-text"><i class="mdi mdi-download"></i>DOWNLOAD</a>
+                        </td>
+                    </tr>
                     }
                 }
             </tbody>
