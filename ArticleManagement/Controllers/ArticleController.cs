@@ -107,7 +107,7 @@ namespace ArticleManagement.Controllers
                 model.KeywordLink = article.KeywordLink;
                 model.Words = article.Words;
                 model.PayPerWord = article.PayPerWord;
-                
+                model.ImageURL = article.ImageURL;
             }
             else
             {
@@ -149,6 +149,7 @@ namespace ArticleManagement.Controllers
                     var userID = User.Identity.Name;
                     var user = UserManager.FindByEmail(userID);
                     article.Name = user.Name;
+                    article.ImageURL = model.ImageURL;
                     ArticleServices.Instance.UpdateArticle(article);
 
                 }
@@ -171,6 +172,7 @@ namespace ArticleManagement.Controllers
                     var userID = User.Identity.Name;
                     var user = UserManager.FindByEmail(userID);
                     article.Name = user.Name;
+                    article.ImageURL = model.ImageURL;
                     ArticleServices.Instance.SaveArticle(article);
 
                 }

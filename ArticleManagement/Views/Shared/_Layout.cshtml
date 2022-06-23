@@ -25,7 +25,7 @@
 
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <!-- endinject -->
-    <link rel="shortcut icon" href="~/Content/template/images/favicon.png" />
+    <link rel="shortcut icon" href="~/Content/template/images/g-icon-15.jpg" />
 
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -83,12 +83,16 @@
                     <li class="nav-item nav-profile dropdown">
                         <a class="nav-link" href="#" data-toggle="dropdown" id="profileDropdown">
 
-                            <img src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg" alt="profile" />
+                            @if (User.IsInRole("Copywriter"))
+                            {
+                        <img src="~/Content/template/images/45707320_1164396070405093_2003041106106777600_n.png" alt="profile" /> }
+                                    else
+                                    {
+                        <img src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg" alt="profile" />}
                             @if (Session["User"] != null)
                             {
-                            <span class="nav-profile-name">@Session["User"].ToString()</span>
-                            <i class="mdi mdi-arrow-down"></i>
-                            }
+                        <span class="nav-profile-name">@Session["User"].ToString()</span>
+                                        <i class="mdi mdi-arrow-down"></i>}
                         </a>
                         <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
                             <a href="@Url.Action("UserProfile","Account")" class="dropdown-item">
@@ -229,8 +233,8 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="d-sm-flex justify-content-center justify-content-sm-between">
-                                <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2022 <a href="#" class="text-muted">Article Management</a>. All rights reserved.</span>
-                                <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center text-muted">Powered by <a href="https://www.cybersoftservices.com/" class="text-muted" target="_blank">Cyber Soft Servis</a></span>
+                                <span hidden class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2022 <a href="#" class="text-muted">Article Management</a>. All rights reserved.</span>
+                                <span hidden class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center text-muted">Powered by <a href="https://www.cybersoftservices.com/" class="text-muted" target="_blank">Cyber Soft Servis</a></span>
                             </div>
                         </div>
                     </div>

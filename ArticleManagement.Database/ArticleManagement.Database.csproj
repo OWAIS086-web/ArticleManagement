@@ -77,6 +77,10 @@
     <Compile Include="Migrations\202206211416560_statusadded.designer.cs">
       <DependentUpon>202206211416560_statusadded.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202206230744072_imageurl.cs" />
+    <Compile Include="Migrations\202206230744072_imageurl.designer.cs">
+      <DependentUpon>202206230744072_imageurl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="AMContext.cs" />
@@ -106,6 +110,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202206211416560_statusadded.resx">
       <DependentUpon>202206211416560_statusadded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202206230744072_imageurl.resx">
+      <DependentUpon>202206230744072_imageurl.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -54,6 +54,7 @@ namespace ArticleManagement.Controllers
             CopywriterViewModel model = new CopywriterViewModel();
             var user = UserManager.FindById(User.Identity.GetUserId());
             model.Articles = ArticleServices.Instance.GetArticlesViaUserName(user.Name);
+            model.SignInUser = user;
             return View(model);
         }
 

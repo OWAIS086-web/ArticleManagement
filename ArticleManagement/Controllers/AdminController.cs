@@ -63,6 +63,8 @@ namespace ArticleManagement.Controllers
         {
             AdminViewModel model = new AdminViewModel();
             model.Articles = ArticleServices.Instance.GetArticles();
+            var user = UserManager.FindById(User.Identity.GetUserId());
+            model.SignedInUser = user;
             return View(model);
         }
 

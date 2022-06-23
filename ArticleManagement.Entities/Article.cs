@@ -20,6 +20,7 @@ namespace ArticleManagement.Entities
         public string FocusKeyWord { get; set; }
         public string KeywordLink { get; set; }
         public string Status { get; set; }
+        public string ImageURL { get; set; }
 
     }
 }

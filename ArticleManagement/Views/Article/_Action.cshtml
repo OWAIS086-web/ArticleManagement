@@ -1,8 +1,11 @@
 ﻿@model ArticleManagement.ViewModels.ArticleActionViewModel
-
+@{
+    var imageURL = !string.IsNullOrEmpty(Model.ImageURL) ? Model.ImageURL : "/Content/template/images/placeholder.png";
+}
 @if (Model != null)
 {
     <div class="modal-content">
+
         <div class="modal-header">
             <h5 class="modal-title">
                 @if (Model.ID != 0)
@@ -65,9 +68,9 @@
 
 
                 @*<div class="form-group">
-                    <label>Pay Per Word</label>
-                    <input type="text" class="form-control" name="PayPerWord" placeholder="Enter Pay Per Word" value="@Model.PayPerWord">
-                </div>*@
+                        <label>Pay Per Word</label>
+                        <input type="text" class="form-control" name="PayPerWord" placeholder="Enter Pay Per Word" value="@Model.PayPerWord">
+                    </div>*@
 
 
                 <div class="form-group">
@@ -101,10 +104,10 @@
                         }
                         else
                         {
-                            <option  value="Pending">Pending</option>
+                            <option value="Pending">Pending</option>
                             <option value="Posted">Posted</option>
                         }
-                        
+
                     </select>
                 </div>
 
@@ -130,23 +133,35 @@
 
 
 
+                <div class="form-group">
+                    <label>Select Image</label>
+
+                    <input class="form-control" value="@Model.ImageURL" name="ImageURL" id="ImageURL" type="hidden" />
+                    <input class="form-control" id="ArticleimageUpload" name="Image" type="file" accept=".png, .jpg, .jpeg" />
+                </div>
+                <br />
+                <div class="thumb">
+                    <img style="height:70px; width:70px" class="img-thumbnail img-fluid" src="@imageURL" id="productimage" />
+                </div>
+
             </form>
-
-            <div class="errorDiv">
-
-            </div>
         </div>
-        <div class="modal-footer">
-            @if (Model.ID != 0)
-            {
-                <button id="actionButton" type="button" class="btn btn-primary"><i class="fas fa-save mr-1"></i> Update</button>
-            }
-            else
-            {
-                <button id="actionButton" type="button" class="btn btn-primary"><i class="fas fa-save mr-1"></i> Save</button>
-            }
-            <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-times mr-1"></i> Close</button>
+
+
+        <div class="errorDiv">
+
         </div>
+    </div>
+    <div class="modal-footer">
+        @if (Model.ID != 0)
+        {
+            <button id="actionButton" type="button" class="btn btn-primary"><i class="fas fa-save mr-1"></i> Update</button>
+        }
+        else
+        {
+            <button id="actionButton" type="button" class="btn btn-primary"><i class="fas fa-save mr-1"></i> Save</button>
+        }
+        <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-times mr-1"></i> Close</button>
     </div>
 }
 
@@ -204,4 +219,42 @@
             })
     });
 
+
+
+
+
+    $("#ArticleimageUpload").change(function () {
+
+        var element = this;
+        var formData = new FormData();
+
+        var totalFiles = element.files.length;
+
+        for (var i = 0; i < totalFiles; i++) {
+            var file = element.files[i];
+            formData.append("Photo", file);
+        }
+
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("ArticleUploadImage", "Shared")',
+            data: formData,
+            dataType: 'json',
+            contentType: false,
+            processData: false
+        })
+            .done(function (response) {
+
+                console.log(response);
+                if (response.Success) {
+                    $("#ImageURL").val(response.ImageURL);
+                    $("#productimage").attr("src", response.ImageURL);
+
+                }
+
+            })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("FAIL");
+            })
+    });
 </script>
