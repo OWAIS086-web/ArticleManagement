@@ -85,10 +85,10 @@
 
                             @if (User.IsInRole("Copywriter"))
                             {
-                        <img src="~/Content/template/images/45707320_1164396070405093_2003041106106777600_n.png" alt="profile" /> }
-                                    else
-                                    {
-                        <img src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg" alt="profile" />}
+                        <img src="~/Content/template/images/4-user-profile-icons-Iconfinder.png" alt="profile" /> }
+                    else
+                    {
+                        <img src="~/Content/template/images/admin (1).png" alt="profile" />}
                             @if (Session["User"] != null)
                             {
                         <span class="nav-profile-name">@Session["User"].ToString()</span>
@@ -119,7 +119,7 @@
         <div class="container-fluid page-body-wrapper">
             <!-- partial:partials/_settings-panel.html -->
             <div class="theme-setting-wrapper">
-                <div id="settings-trigger"><i class="typcn typcn-cog-outline"></i></div>
+                @*<div id="settings-trigger"><i class="typcn typcn-cog-outline"></i></div>*@
                 <div id="theme-settings" class="settings-panel">
                     <i class="settings-close typcn typcn-times"></i>
                     <p class="settings-heading">SIDEBAR SKINS</p>
@@ -230,14 +230,7 @@
                 <!-- content-wrapper ends -->
                 <!-- partial:partials/_footer.html -->
                 <footer class="footer">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="d-sm-flex justify-content-center justify-content-sm-between">
-                                <span hidden class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2022 <a href="#" class="text-muted">Article Management</a>. All rights reserved.</span>
-                                <span hidden class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center text-muted">Powered by <a href="https://www.cybersoftservices.com/" class="text-muted" target="_blank">Cyber Soft Servis</a></span>
-                            </div>
-                        </div>
-                    </div>
+                    
                 </footer>
                 <!-- partial -->
             </div>

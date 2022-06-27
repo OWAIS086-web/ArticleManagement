@@ -205,7 +205,9 @@
     <Content Include="Content\template\css\vertical-layout-light\style.css" />
     <Content Include="Content\template\gulpfile.js" />
     <Content Include="Content\template\images\1-4.png" />
+    <Content Include="Content\template\images\4-user-profile-icons-Iconfinder.png" />
     <Content Include="Content\template\images\45707320_1164396070405093_2003041106106777600_n.png" />
+    <Content Include="Content\template\images\admin %281%29.png" />
     <Content Include="Content\template\images\auth\lockscreen-bg.jpg" />
     <Content Include="Content\template\images\auth\login-bg.jpg" />
     <Content Include="Content\template\images\auth\register-bg.jpg" />
