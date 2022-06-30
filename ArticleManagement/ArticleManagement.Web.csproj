@@ -1257,6 +1257,7 @@
     <Content Include="Views\BlogTitle\_Delete.cshtml" />
     <Content Include="Views\BlogTitle\_Listing.cshtml" />
     <Content Include="Views\Copywriter\Dashboard.cshtml" />
+    <Content Include="Views\Article\PendingIndex.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -42,11 +42,31 @@ namespace ArticleManagement.Services
             {
                 if (!string.IsNullOrEmpty(SearchTerm))
                 {
-                    Articles = context.Articles.Where(x => x.ArticleName == SearchTerm).ToList();
+                    Articles = context.Articles.Where(x => x.ArticleName != null && x.ArticleName.ToLower()
+                                                         .Contains(SearchTerm.ToLower())).ToList();
                 }
                 else
                 {
                     Articles = context.Articles.ToList();
+                }
+            }
+            return Articles;
+        }
+
+
+        public List<Article> GetPendingArticles(string SearchTerm = "")
+        {
+            List<Article> Articles = null;
+            using (var context = new AMContext())
+            {
+                if (!string.IsNullOrEmpty(SearchTerm))
+                {
+                    Articles = context.Articles.Where(x => x.Status == "Pending" && x.ArticleName != null && x.ArticleName.ToLower()
+                                                         .Contains(SearchTerm.ToLower())).ToList();
+                }
+                else
+                {
+                    Articles = context.Articles.Where(x=>x.Status == "Pending").ToList();
                 }
             }
             return Articles;
@@ -59,11 +79,30 @@ namespace ArticleManagement.Services
             {
                 if (!string.IsNullOrEmpty(SearchTerm))
                 {
-                    Articles = context.Articles.Where(x => x.Name == SearchTerm).ToList();
+                    Articles = context.Articles.Where(x =>  x.Name != null && x.Name.ToLower()
+                                                         .Contains(SearchTerm.ToLower())).ToList();
                 }
                 else
                 {
                     Articles = context.Articles.ToList();
+                }
+            }
+            return Articles;
+        }
+
+        public List<Article> GetPendingArticlesViaUserName(string SearchTerm = "")
+        {
+            List<Article> Articles = null;
+            using (var context = new AMContext())
+            {
+                if (!string.IsNullOrEmpty(SearchTerm))
+                {
+                    Articles = context.Articles.Where(x => x.Status == "Pending" && x.Name != null && x.Name.ToLower()
+                                      .Contains(SearchTerm.ToLower())).ToList();
+                }
+                else
+                {
+                    Articles = context.Articles.Where(x => x.Status == "Pending").ToList();
                 }
             }
             return Articles;

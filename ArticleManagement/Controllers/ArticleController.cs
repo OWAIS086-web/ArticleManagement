@@ -83,6 +83,25 @@ namespace ArticleManagement.Controllers
         }
 
 
+        public ActionResult PendingIndex(string searchterm = "")
+        {
+
+            ArticleListingViewModel model = new ArticleListingViewModel();
+            if (User.IsInRole("Copywriter") == true)
+            {
+                searchterm = User.Identity.Name;
+                var user = UserManager.FindByEmail(searchterm);
+                model.Articles = ArticleServices.Instance.GetPendingArticlesViaUserName(user.Name);
+
+            }
+            else
+            {
+                model.Articles = ArticleServices.Instance.GetPendingArticles(searchterm);
+            }
+            return View(model);
+        }
+
+
 
 
 
@@ -146,9 +165,8 @@ namespace ArticleManagement.Controllers
                     article.FocusKeyWord = model.FocusKeyWord;
                     article.KeywordLink = model.KeywordLink;
                     article.Status = model.Status;
-                    var userID = User.Identity.Name;
-                    var user = UserManager.FindByEmail(userID);
-                    article.Name = user.Name;
+                  
+                    article.Name = model.Name;
                     article.ImageURL = model.ImageURL;
                     ArticleServices.Instance.UpdateArticle(article);
 
