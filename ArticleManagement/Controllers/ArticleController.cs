@@ -72,7 +72,7 @@ namespace ArticleManagement.Controllers
             {
                 searchterm = User.Identity.Name;
                 var user = UserManager.FindByEmail(searchterm);
-                model.Articles = ArticleServices.Instance.GetArticlesViaUserName(user.Name);
+                model.Articles = ArticleServices.Instance.GetArticlesViaUserName(user.Name, searchterm);
 
             }
             else

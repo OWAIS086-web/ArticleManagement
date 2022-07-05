@@ -17,6 +17,7 @@ namespace ArticleManagement.ViewModels
         public string Password { get; set; }
         public string Contact { get; set; }
         public List<Article> Articles { get; set; }
+        public string SearchTerm { get; set; }
     }
 
     

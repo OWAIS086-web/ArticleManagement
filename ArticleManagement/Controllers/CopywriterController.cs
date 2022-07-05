@@ -53,7 +53,18 @@ namespace ArticleManagement.Controllers
         {
             CopywriterViewModel model = new CopywriterViewModel();
             var user = UserManager.FindById(User.Identity.GetUserId());
-            model.Articles = ArticleServices.Instance.GetArticlesViaUserName(user.Name);
+            model.Articles = ArticleServices.Instance.GetArticlesViaUserName(user.Name, "");
+            model.SignInUser = user;
+            return View(model);
+        }
+
+
+        [HttpPost]
+        public ActionResult Dashboard(string SearchTerm = "")
+        {
+            CopywriterViewModel model = new CopywriterViewModel();
+            var user = UserManager.FindById(User.Identity.GetUserId());
+            model.Articles = ArticleServices.Instance.GetArticlesViaUserName(user.Name, SearchTerm);
             model.SignInUser = user;
             return View(model);
         }

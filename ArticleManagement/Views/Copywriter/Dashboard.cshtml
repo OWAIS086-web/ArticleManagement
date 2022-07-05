@@ -3,48 +3,84 @@
     ViewBag.Title = "Dashboard";
 }
 
+<style>
+    .scroll {
+        overflow-x: scroll;
+        width: contain;
+    }
+
+    td {
+        width: 200px;
+    }
+
+</style>
 <h2>Dashboard - Welcome @Model.SignInUser.Name</h2>
 <hr />
 <h2>Articles</h2>
+
+<div class="row mb-3">
+    <div class="col col-lg-12">
+        <form>
+            <div class="input-group">
+                <input type="text" name="searchterm" class="form-control" placeholder="Search." value="@Model.SearchTerm">
+                @Html.ValidationSummary("", new { @class = "text-danger" })
+
+
+                <div class="input-group-append">
+                    <button class="btn btn-outline-primary" type="submit"><i class="fas fa-search mr-1"></i> Search</button>
+                    <a class="btn btn-outline-secondary" href="@Url.Action("Dashboard", "CopyWriter")"><i class="fas fa-redo-alt mr-1"></i> Reset</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
 <div class="card">
 
     <div class="table-responsive">
         <table class="table table-striped table-hover">
             <thead>
                 <tr>
-                    <th>
+                    <th class="col-sm-1">
                         Copy Writer
+
                     </th>
-                    <th>
+                    <th class="col-sm-2">
                         Article Title
                     </th>
-                    <th>
+                    <th class="col-sm-2">
                         Site Blog
                     </th>
 
-                    <th>
+                    <th class="col-sm-2">Status</th>
+
+
+                    <th class="col-sm-2">
+                        Action
+                    </th>
+
+
+                    <th class="col-sm-2">
                         Note
                     </th>
-                    <th>
+                    <th class="col-sm-2">
                         Words
                     </th>
 
-                    <th>
+
+                    <th class="col-sm-2">
                         Focus Keyword
                     </th>
-                    <th>
+                    <th class="col-sm-2">
                         Link
                     </th>
-                    <th>
+                    <th class="col-sm-2">
                         Posting Date
                     </th>
 
-                    <th>Status</th>
 
 
-                    <th>
-                        Action
-                    </th>
+
                 </tr>
             </thead>
             <tbody>
@@ -53,39 +89,53 @@
 
                     foreach (var item in Model.Articles)
                     {
-                <tr>
-                    <td>@item.Name</td>
-                    <td>@item.ArticleName</td>
-                    <td>@item.BlogSiteTitle</td>
+                        <tr>
+                            <td style="white-space: pre-line; "><div style="width: 230px; word-wrap: break-word;">@item.Name</div></td>
 
-                    <td>@item.Note</td>
-                    <td>@item.Words</td>
+                            <td style="white-space: pre-line; "><div style="width: 230px; word-wrap: break-word;">@item.ArticleName</div> </td>
+                            <td style="white-space: pre-line; "> <div style="width: 230px; word-wrap: break-word;">@item.BlogSiteTitle</div></td>
+                            @if (item.Status == "Posted")
+                            {
+                                <td style="white-space: pre-line; "><div style="width: 230px; word-wrap: break-word;"><label class="badge badge-success">@item.Status</label></div></td>
 
-                    <td>@item.FocusKeyWord</td>
-                    <td>@item.KeywordLink</td>
-                    <td>@item.PostingDate</td>
+                            }
+                            else
+                            {
+                                <td style="white-space: pre-line; "><div style="width: 230px; word-wrap: break-word;"><label class="badge badge-info">@item.Status</label></div></td>
+
+                            }
+                            <td style="white-space: pre-line; ">
+                                <button data-href="@Url.Action("Action", "Article", new { ID = item.ID })" type="button" class="data-btn btn btn-info btn-icon-text" data-toggle="modal" data-target="#actionModal"><i class="mdi mdi-pencil"></i> EDIT</button>
+                                <button data-href="@Url.Action("Delete", "Article", new { ID = item.ID })" type="button" class="data-btn btn btn-danger btn-icon-text" data-toggle="modal" data-target="#actionModal"><i class="mdi mdi-delete"></i>DELETE</button>
+                                @if (item.Status != "Posted")
+                                {
+                                    <a href="@Url.Action("Post", "Article", new { ID = item.ID })" type="button" class="data-btn btn btn-info btn-icon-text"><i class="mdi mdi-upload"></i>POST</a>
+                                }
+                                <a href="@Url.Action("DownloadFile", "Article", new { fileName = item.DocURL })" type="button" class="data-btn btn btn-success btn-icon-text"><i class="mdi mdi-download"></i>DOWNLOAD</a>
+                            </td>
+                            <td style="white-space: pre-line; "><div style="width: 230px; word-wrap: break-word;">@item.Note</div></td>
+                            <td style="white-space: pre-line; "><div style="width: 230px; word-wrap: break-word;">@item.Words</div></td>
+                            <td style="white-space: pre-line; "><div style="width: 230px; word-wrap: break-word;">@item.FocusKeyWord</div></td>
+                            <td style="white-space: pre-line; "><div style="width: 230px; word-wrap: break-word;">@item.KeywordLink</div></td>
+                            <td style="white-space: pre-line; "><div style="width: 230px; word-wrap: break-word;">@item.PostingDate</div></td>
 
 
-                    @if (item.Status == "Posted")
-                    {
-                        <td><label class="badge badge-success">@item.Status</label> </td>
+                        </tr>
 
-                    }
-                    else
-                    {
-                        <td><label class="badge badge-info">@item.Status</label></td>
+                        <tr>
+                            <td colspan="10">
+                                <button class="left-button btn btn-block btn-secondary">
+                                    LEFT
 
-                    }
-                    <td>
-                        <button data-href="@Url.Action("Action", "Article", new { ID = item.ID })" type="button" class="data-btn btn btn-info btn-icon-text" data-toggle="modal" data-target="#actionModal"><i class="mdi mdi-pencil"></i> EDIT</button>
-                        <button data-href="@Url.Action("Delete", "Article", new { ID = item.ID })" type="button" class="data-btn btn btn-danger btn-icon-text" data-toggle="modal" data-target="#actionModal"><i class="mdi mdi-delete"></i>DELETE</button>
-                        @if (item.Status != "Posted")
-                        {
-                            <a href="@Url.Action("Post", "Article", new { ID = item.ID })" type="button" class="data-btn btn btn-info btn-icon-text"><i class="mdi mdi-upload"></i>POST</a>
-                    }
-                        <a href="@Url.Action("DownloadFile", "Article", new { fileName = item.DocURL })" type="button" class="data-btn btn btn-success btn-icon-text"><i class="mdi mdi-download"></i>DOWNLOAD</a>
-                        </td>
-                    </tr>
+                                </button>
+                                <button class="right-button btn btn-block btn-primary">
+                                    RIGHT
+                                </button>
+                            </td>
+
+
+                        </tr>
+
                     }
                 }
             </tbody>
@@ -106,6 +156,28 @@
             .done(function (response) {
                 $("#actionModal .modal-dialog").html(response);
             });
-        });
+    });
+
+
+
+    $(".right-button").click(function () {
+        event.preventDefault();
+        $(".table-responsive").animate(
+            {
+                scrollLeft: "+=400px"
+            },
+            "fast"
+        );
+    });
+
+    $(".left-button").click(function () {
+        event.preventDefault();
+        $(".table-responsive").animate(
+            {
+                scrollLeft: "-=400px"
+            },
+            "fast"
+        );
+    });
 </script>
 

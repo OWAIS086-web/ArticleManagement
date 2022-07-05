@@ -10,5 +10,6 @@ namespace ArticleManagement.ViewModels
     {
         public List<Article> Articles { get; set; }
         public User SignInUser { get; set; }
+        public string SearchTerm { get; set; }
     }
 }

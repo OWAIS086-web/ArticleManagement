@@ -177,6 +177,7 @@
     <Compile Include="Controllers\ArticleController.cs" />
     <Compile Include="Controllers\BlogTitleController.cs" />
     <Compile Include="Controllers\CopywriterController.cs" />
+    <Compile Include="Controllers\EditorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
@@ -1258,6 +1259,7 @@
     <Content Include="Views\BlogTitle\_Listing.cshtml" />
     <Content Include="Views\Copywriter\Dashboard.cshtml" />
     <Content Include="Views\Article\PendingIndex.cshtml" />
+    <Content Include="Views\Editor\Dashboard.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

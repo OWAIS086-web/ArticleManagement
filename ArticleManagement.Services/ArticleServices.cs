@@ -72,19 +72,19 @@ namespace ArticleManagement.Services
             return Articles;
         }
 
-        public List<Article> GetArticlesViaUserName(string SearchTerm = "")
+        public List<Article> GetArticlesViaUserName(string UserName, string SearchTerm = "")
         {
             List<Article> Articles = null;
             using (var context = new AMContext())
             {
                 if (!string.IsNullOrEmpty(SearchTerm))
                 {
-                    Articles = context.Articles.Where(x =>  x.Name != null && x.Name.ToLower()
-                                                         .Contains(SearchTerm.ToLower())).ToList();
+                    Articles = context.Articles.Where(x =>  x.Name != null  && x.Name.ToLower()
+                                                         .Contains(SearchTerm.ToLower()) && x.Name == UserName).ToList();
                 }
                 else
                 {
-                    Articles = context.Articles.ToList();
+                    Articles = context.Articles.Where(x=>x.Name == UserName).ToList();
                 }
             }
             return Articles;
@@ -102,7 +102,7 @@ namespace ArticleManagement.Services
                 }
                 else
                 {
-                    Articles = context.Articles.Where(x => x.Status == "Pending").ToList();
+                    Articles = context.Articles.Where(x => x.Status == "Pending" && x.Name == SearchTerm).ToList();
                 }
             }
             return Articles;

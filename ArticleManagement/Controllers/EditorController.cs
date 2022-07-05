@@ -1,8 +1,7 @@
-﻿using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.Owin;
-using ArticleManagement.Services;
+﻿using ArticleManagement.Services;
 using ArticleManagement.ViewModels;
-using ArticleManagement.Entities;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,8 +10,9 @@ using System.Web.Mvc;
 
 namespace ArticleManagement.Controllers
 {
-    public class AdminController : Controller
+    public class EditorController : Controller
     {
+        // GET: Editor
         private AMSignInManager _signInManager;
         private AMRolesManager _rolesManager;
         private AMUserManager _userManager;
@@ -79,7 +79,5 @@ namespace ArticleManagement.Controllers
             model.SignedInUser = user;
             return View(model);
         }
-
-
     }
 }
