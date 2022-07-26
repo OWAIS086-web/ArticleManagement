@@ -60,11 +60,11 @@ namespace ArticleManagement.Controllers
 
 
         [HttpPost]
-        public ActionResult Dashboard(string SearchTerm = "")
+        public ActionResult Dashboard(string Property,string SearchTerm = "")
         {
             CopywriterViewModel model = new CopywriterViewModel();
             var user = UserManager.FindById(User.Identity.GetUserId());
-            model.Articles = ArticleServices.Instance.GetArticlesViaUserName(user.Name, SearchTerm);
+            model.Articles = ArticleServices.Instance.GetArticlesViaUserName(user.Name,Property, SearchTerm);
             model.SignInUser = user;
             return View(model);
         }

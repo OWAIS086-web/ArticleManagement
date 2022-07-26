@@ -1,6 +1,7 @@
 ﻿@model ArticleManagement.ViewModels.CopywriterViewModel
 @{
     ViewBag.Title = "Dashboard";
+    string blogtitle = "";
 }
 
 <style>
@@ -20,15 +21,30 @@
 
 <div class="row mb-3">
     <div class="col col-lg-12">
-        <form>
+        <form method="post">
             <div class="input-group">
+                <select class="form-control col-md-5" name="Property">
+                    <option value="ArticleName">
+                        Article Name
+                    </option>
+                    <option value="Name">
+                        CopyWriter
+                    </option>
+                    <option value="BlogSiteTitle">
+                        BlogSiteTitle
+                    </option>
+                    <option value="FocusKeyWord">
+                        FocusKeyWord
+                    </option>
+                </select>
                 <input type="text" name="searchterm" class="form-control" placeholder="Search." value="@Model.SearchTerm">
                 @Html.ValidationSummary("", new { @class = "text-danger" })
 
 
                 <div class="input-group-append">
+
                     <button class="btn btn-outline-primary" type="submit"><i class="fas fa-search mr-1"></i> Search</button>
-                    <a class="btn btn-outline-secondary" href="@Url.Action("Dashboard", "CopyWriter")"><i class="fas fa-redo-alt mr-1"></i> Reset</a>
+                    <a class="btn btn-outline-secondary" href="@Url.Action("Dashboard", "Admin")"><i class="fas fa-redo-alt mr-1"></i> Reset</a>
                 </div>
             </div>
         </form>
@@ -53,7 +69,9 @@
                     </th>
 
                     <th class="col-sm-2">Status</th>
-
+                    <th class="col-sm-2">
+                        Posting Date
+                    </th>
 
                     <th class="col-sm-2">
                         Action
@@ -74,9 +92,7 @@
                     <th class="col-sm-2">
                         Link
                     </th>
-                    <th class="col-sm-2">
-                        Posting Date
-                    </th>
+
 
 
 
@@ -89,53 +105,68 @@
 
                     foreach (var item in Model.Articles)
                     {
-                        <tr>
-                            <td style="white-space: pre-line; "><div style="width: 230px; word-wrap: break-word;">@item.Name</div></td>
+                        if (blogtitle != item.BlogSiteTitle)
+                        {
+                            <tr>
 
-                            <td style="white-space: pre-line; "><div style="width: 230px; word-wrap: break-word;">@item.ArticleName</div> </td>
-                            <td style="white-space: pre-line; "> <div style="width: 230px; word-wrap: break-word;">@item.BlogSiteTitle</div></td>
-                            @if (item.Status == "Posted")
-                            {
-                                <td style="white-space: pre-line; "><div style="width: 230px; word-wrap: break-word;"><label class="badge badge-success">@item.Status</label></div></td>
+                                <td style="background-color: cadetblue; color: white; font-size: 20px;" colspan="10" align="center">
+                                    @item.BlogSiteTitle
+                                    @{ blogtitle = item.BlogSiteTitle;}
+                                </td>
 
-                            }
-                            else
-                            {
-                                <td style="white-space: pre-line; "><div style="width: 230px; word-wrap: break-word;"><label class="badge badge-info">@item.Status</label></div></td>
+                            </tr>
+                        }
+                        if (blogtitle == item.BlogSiteTitle)
+                        {
+                            <tr>
+                                <td style="white-space: pre-line; "><div style="width: 230px; word-wrap: break-word;">@item.Name</div></td>
 
-                            }
-                            <td style="white-space: pre-line; ">
-                                <button data-href="@Url.Action("Action", "Article", new { ID = item.ID })" type="button" class="data-btn btn btn-info btn-icon-text" data-toggle="modal" data-target="#actionModal"><i class="mdi mdi-pencil"></i> EDIT</button>
-                                <button data-href="@Url.Action("Delete", "Article", new { ID = item.ID })" type="button" class="data-btn btn btn-danger btn-icon-text" data-toggle="modal" data-target="#actionModal"><i class="mdi mdi-delete"></i>DELETE</button>
-                                @if (item.Status != "Posted")
+                                <td style="white-space: pre-line; "><div style="width: 230px; word-wrap: break-word;">@item.ArticleName</div> </td>
+
+                                <td style="white-space: pre-line; "> <div style="width: 230px; word-wrap: break-word;">@item.BlogSiteTitle</div></td>
+                                @if (item.Status == "Posted")
                                 {
-                                    <a href="@Url.Action("Post", "Article", new { ID = item.ID })" type="button" class="data-btn btn btn-info btn-icon-text"><i class="mdi mdi-upload"></i>POST</a>
+                                    <td style="white-space: pre-line; "><div style="width: 230px; word-wrap: break-word;"><label class="badge badge-success">@item.Status</label></div></td>
+
                                 }
-                                <a href="@Url.Action("DownloadFile", "Article", new { fileName = item.DocURL })" type="button" class="data-btn btn btn-success btn-icon-text"><i class="mdi mdi-download"></i>DOWNLOAD</a>
-                            </td>
-                            <td style="white-space: pre-line; "><div style="width: 230px; word-wrap: break-word;">@item.Note</div></td>
-                            <td style="white-space: pre-line; "><div style="width: 230px; word-wrap: break-word;">@item.Words</div></td>
-                            <td style="white-space: pre-line; "><div style="width: 230px; word-wrap: break-word;">@item.FocusKeyWord</div></td>
-                            <td style="white-space: pre-line; "><div style="width: 230px; word-wrap: break-word;">@item.KeywordLink</div></td>
-                            <td style="white-space: pre-line; "><div style="width: 230px; word-wrap: break-word;">@item.PostingDate</div></td>
+                                else
+                                {
+                                    <td style="white-space: pre-line; "><div style="width: 230px; word-wrap: break-word;"><label class="badge badge-info">@item.Status</label></div></td>
+
+                                }
+                                <td style="white-space: pre-line; "><div style="width: 230px; word-wrap: break-word;">@item.PostingDate.ToString("MM/dd/yy")</div></td>
+
+                                <td style="white-space: pre-line; ">
+                                    <button data-href="@Url.Action("Action", "Article", new { ID = item.ID })" type="button" class="data-btn btn btn-info btn-icon-text" data-toggle="modal" data-target="#actionModal"><i class="mdi mdi-pencil"></i> EDIT</button>
+                                    <button data-href="@Url.Action("Delete", "Article", new { ID = item.ID })" type="button" class="data-btn btn btn-danger btn-icon-text" data-toggle="modal" data-target="#actionModal"><i class="mdi mdi-delete"></i>DELETE</button>
+                                    @if (item.Status != "Posted")
+                                    {
+                                        <a href="@Url.Action("Post", "Article", new { ID = item.ID })" type="button" class="data-btn btn btn-info btn-icon-text"><i class="mdi mdi-upload"></i>POST</a>
+                                    }
+                                    <a href="@Url.Action("DownloadFile", "Article", new { fileName = item.DocURL })" id="@item.DocURL" type="button" class="data-btn btn btn-success btn-icon-text"><i class="mdi mdi-download"></i>DOWNLOAD</a>
+                                </td>
+                                <td style="white-space: pre-line; "><div style="width: 230px; word-wrap: break-word;">@item.Note</div></td>
+                                <td style="white-space: pre-line; "><div style="width: 230px; word-wrap: break-word;">@item.Words</div></td>
+                                <td style="white-space: pre-line; "><div style="width: 230px; word-wrap: break-word;">@item.FocusKeyWord</div></td>
+                                <td style="white-space: pre-line; "><div style="width: 230px; word-wrap: break-word;">@item.KeywordLink</div></td>
 
 
-                        </tr>
+                            </tr>
 
-                        <tr>
-                            <td colspan="10">
-                                <button class="left-button btn btn-block btn-secondary">
-                                    LEFT
+                            <tr>
+                                <td colspan="10">
+                                    <button class="left-button btn btn-block btn-secondary">
+                                        LEFT
 
-                                </button>
-                                <button class="right-button btn btn-block btn-primary">
-                                    RIGHT
-                                </button>
-                            </td>
+                                    </button>
+                                    <button class="right-button btn btn-block btn-primary">
+                                        RIGHT
+                                    </button>
+                                </td>
 
 
-                        </tr>
-
+                            </tr>
+                        }
                     }
                 }
             </tbody>

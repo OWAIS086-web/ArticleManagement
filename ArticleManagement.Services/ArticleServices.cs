@@ -43,11 +43,11 @@ namespace ArticleManagement.Services
                 if (!string.IsNullOrEmpty(SearchTerm))
                 {
                     Articles = context.Articles.Where(x => x.ArticleName != null && x.ArticleName.ToLower()
-                                                         .Contains(SearchTerm.ToLower())).ToList();
+                                                         .Contains(SearchTerm.ToLower())).OrderBy(x=>x.BlogSiteTitle).ToList();
                 }
                 else
                 {
-                    Articles = context.Articles.ToList();
+                    Articles = context.Articles.OrderBy(x=>x.BlogSiteTitle).ToList();
                 }
             }
             return Articles;
@@ -62,15 +62,67 @@ namespace ArticleManagement.Services
                 if (!string.IsNullOrEmpty(SearchTerm))
                 {
                     Articles = context.Articles.Where(x => x.Status == "Pending" && x.ArticleName != null && x.ArticleName.ToLower()
-                                                         .Contains(SearchTerm.ToLower())).ToList();
+                                                         .Contains(SearchTerm.ToLower())).OrderBy(x => x.BlogSiteTitle).ToList();
                 }
                 else
                 {
-                    Articles = context.Articles.Where(x=>x.Status == "Pending").ToList();
+                    Articles = context.Articles.Where(x=>x.Status == "Pending").OrderBy(x => x.BlogSiteTitle).ToList();
                 }
             }
             return Articles;
         }
+
+
+
+
+
+
+        public List<Article> GetArticlesAccordingToProperty(string Property, string Value = "")
+        {
+            List<Article> Articles = null;
+            using (var context = new AMContext())
+            {
+                if (!string.IsNullOrEmpty(Value))
+                {
+                    if(Property == "ArticleName")
+                    {
+                        Articles = context.Articles.Where(x => x.ArticleName != null && x.ArticleName.ToLower()
+                                                        .Contains(Value.ToLower())).OrderBy(x => x.BlogSiteTitle).ToList();
+                    }
+                    else if(Property == "BlogSiteTitle")
+                    {
+                        Articles = context.Articles.Where(x => x.BlogSiteTitle != null && x.BlogSiteTitle.ToLower()
+                                                        .Contains(Value.ToLower())).OrderBy(x => x.BlogSiteTitle).ToList();
+                    }else if(Property == "FocusKeyWord")
+                    {
+                        Articles = context.Articles.Where(x => x.FocusKeyWord != null && x.FocusKeyWord.ToLower()
+                                                        .Contains(Value.ToLower())).OrderBy(x => x.BlogSiteTitle).ToList();
+                    }
+                    else if (Property == "Name")
+                    {
+                        Articles = context.Articles.Where(x => x.Name != null && x.Name.ToLower()
+                                                        .Contains(Value.ToLower())).OrderBy(x => x.BlogSiteTitle).ToList();
+                    }
+                    else
+                    {
+                        Articles = context.Articles.OrderBy(x => x.BlogSiteTitle).ToList();
+                    }
+
+
+                }
+                else
+                {
+                    Articles = context.Articles.OrderBy(x => x.BlogSiteTitle).ToList();
+                }
+            }
+            return Articles;
+        }
+
+
+
+
+
+
 
         public List<Article> GetArticlesViaUserName(string UserName, string SearchTerm = "")
         {
@@ -79,12 +131,58 @@ namespace ArticleManagement.Services
             {
                 if (!string.IsNullOrEmpty(SearchTerm))
                 {
-                    Articles = context.Articles.Where(x =>  x.Name != null  && x.Name.ToLower()
-                                                         .Contains(SearchTerm.ToLower()) && x.Name == UserName).ToList();
+                    Articles = context.Articles.Where(x => x.Name == UserName && x.ArticleName != null  && x.ArticleName.ToLower()
+                                                         .Contains(SearchTerm.ToLower())).OrderBy(x => x.BlogSiteTitle).ToList();
                 }
                 else
                 {
-                    Articles = context.Articles.Where(x=>x.Name == UserName).ToList();
+                    Articles = context.Articles.Where(x=>x.Name == UserName).OrderBy(x => x.BlogSiteTitle).ToList();
+                }
+            }
+            return Articles;
+        }
+
+
+
+        public List<Article> GetArticlesViaUserName(string UserName,string Property, string SearchTerm = "")
+        {
+            List<Article> Articles = null;
+            using (var context = new AMContext())
+            {
+                if (!string.IsNullOrEmpty(SearchTerm))
+                {
+                    if (Property == "ArticleName")
+                    {
+                        Articles = context.Articles.Where(x => x.ArticleName != null && x.Name == UserName && x.ArticleName.ToLower()
+                                                        .Contains(SearchTerm.ToLower())).OrderBy(x => x.BlogSiteTitle).ToList();
+                    }
+                    else if (Property == "BlogSiteTitle")
+                    {
+                        Articles = context.Articles.Where(x => x.BlogSiteTitle != null && x.Name == UserName && x.BlogSiteTitle.ToLower()
+                                                        .Contains(SearchTerm.ToLower())).OrderBy(x => x.BlogSiteTitle).ToList();
+                    }
+                    else if (Property == "FocusKeyWord")
+                    {
+                        Articles = context.Articles.Where(x => x.FocusKeyWord != null && x.Name == UserName && x.FocusKeyWord.ToLower()
+                                                        .Contains(SearchTerm.ToLower())).OrderBy(x => x.BlogSiteTitle).ToList();
+                    }
+                    else if (Property == "Name")
+                    {
+                        Articles = context.Articles.Where(x => x.Name != null && x.Name.ToLower()
+                                                        .Contains(SearchTerm.ToLower())).OrderBy(x => x.BlogSiteTitle).ToList();
+                    }
+                    else
+                    {
+                        Articles = context.Articles.OrderBy(x => x.BlogSiteTitle).ToList();
+                    }
+
+
+
+                   
+                }
+                else
+                {
+                    Articles = context.Articles.Where(x => x.Name == UserName).OrderBy(x => x.BlogSiteTitle).ToList();
                 }
             }
             return Articles;
@@ -98,11 +196,11 @@ namespace ArticleManagement.Services
                 if (!string.IsNullOrEmpty(SearchTerm))
                 {
                     Articles = context.Articles.Where(x => x.Status == "Pending" && x.Name != null && x.Name.ToLower()
-                                      .Contains(SearchTerm.ToLower())).ToList();
+                                      .Contains(SearchTerm.ToLower())).OrderBy(x => x.BlogSiteTitle).ToList();
                 }
                 else
                 {
-                    Articles = context.Articles.Where(x => x.Status == "Pending" && x.Name == SearchTerm).ToList();
+                    Articles = context.Articles.Where(x => x.Status == "Pending" && x.Name == SearchTerm).OrderBy(x => x.BlogSiteTitle).ToList();
                 }
             }
             return Articles;

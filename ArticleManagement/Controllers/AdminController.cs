@@ -71,10 +71,10 @@ namespace ArticleManagement.Controllers
 
 
         [HttpPost]
-        public ActionResult Dashboard(string SearchTerm = "")
+        public ActionResult Dashboard(string Property,string SearchTerm="")
         {
             AdminViewModel model = new AdminViewModel();
-            model.Articles = ArticleServices.Instance.GetArticles(SearchTerm);
+            model.Articles = ArticleServices.Instance.GetArticlesAccordingToProperty(Property, SearchTerm);
             var user = UserManager.FindById(User.Identity.GetUserId());
             model.SignedInUser = user;
             return View(model);

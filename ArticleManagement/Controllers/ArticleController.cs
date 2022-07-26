@@ -64,15 +64,35 @@ namespace ArticleManagement.Controllers
             SignInManager = signInManager;
         }
         // GET: Article
-        public ActionResult Index(string searchterm = "")
+        public ActionResult Index()
+        {
+
+            ArticleListingViewModel model = new ArticleListingViewModel();
+            string searchterm = User.Identity.Name;
+            var user = UserManager.FindByEmail(searchterm);
+            if (User.IsInRole("Copywriter") == true)
+            {
+     
+                model.Articles = ArticleServices.Instance.GetArticlesViaUserName(user.Name);
+
+            }
+            else
+            {
+                model.Articles = ArticleServices.Instance.GetArticles();
+            }
+            return View(model);
+        }
+
+
+        [HttpPost]
+        public ActionResult Index(string Property,string searchterm = "")
         {
 
             ArticleListingViewModel model = new ArticleListingViewModel();
             if (User.IsInRole("Copywriter") == true)
             {
                 searchterm = User.Identity.Name;
-                var user = UserManager.FindByEmail(searchterm);
-                model.Articles = ArticleServices.Instance.GetArticlesViaUserName(user.Name, searchterm);
+                model.Articles = ArticleServices.Instance.GetArticlesAccordingToProperty(Property, searchterm);
 
             }
             else

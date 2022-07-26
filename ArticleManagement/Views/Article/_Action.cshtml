@@ -2,6 +2,12 @@
 @{
     var imageURL = !string.IsNullOrEmpty(Model.ImageURL) ? Model.ImageURL : "/Content/template/images/placeholder.png";
 }
+
+<style>
+    label{
+        color:black;
+    }
+</style>
 @if (Model != null)
 {
 <div class="modal-content">
@@ -26,14 +32,15 @@
             <input type="hidden" name="ID" value="@Model.ID" />
 
             <input type="hidden" name="Name" value="@Model.Name" />
-            <div class="form-group">
-                <label>Name</label>
-                <input class="form-control" name="ArticleName" placeholder="Enter Article Name." value="@Model.ArticleName">
-            </div>
+                <div class="form-group">
+                    <label class="col-form-label">Name</label>
+                    <input class="form-control" name="ArticleName" placeholder="Enter Article Name." value="@Model.ArticleName">
+                </div>
 
             <div class="form-group">
                 <label>Select Blog Site Title</label>
-                <select name="BlogSiteTitle" id="BlogSiteTitle">
+                <br />
+                <select class="form-control" name="BlogSiteTitle" id="BlogSiteTitle">
                     @foreach (var item in Model.BlogTitles)
                     {
                         if (Model.ID != 0)
@@ -84,7 +91,7 @@
 
             <div class="form-group">
                 <label>Status</label>
-                <select name="Status" id="Status">
+                <select class="form-control" name="Status" id="Status">
 
                     @if (Model.ID != 0)
                     {

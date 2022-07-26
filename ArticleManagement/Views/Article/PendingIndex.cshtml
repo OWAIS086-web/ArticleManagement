@@ -11,6 +11,22 @@
     <div class="col col-lg-12">
         <form>
             <div class="input-group">
+                <select class="form-control col-md-5" name="Property">
+                    <option value="ArticleName">
+                        Article Name
+                    </option>
+                    <option value="Name">
+                        CopyWriter
+                    </option>
+                    <option value="BlogSiteTitle">
+                        BlogSiteTitle
+                    </option>
+                    <option value="FocusKeyWord">
+                        FocusKeyWord
+                    </option>
+                </select>
+
+         
                 <input type="text" name="searchterm" class="form-control" placeholder="Search." value="@Model.SearchTerm">
                 @Html.ValidationSummary("", new { @class = "text-danger" })
 

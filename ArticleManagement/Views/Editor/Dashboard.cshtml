@@ -9,9 +9,9 @@
         width: contain;
     }
 
-    td {
+   /* td {
         width: 200px;
-    }
+    }*/
 
 </style>
 <h2>Dashboard - Welcome @Model.SignedInUser.Name</h2>
@@ -93,7 +93,7 @@
                             <td style="white-space: pre-line; "><div style="width: 230px; word-wrap: break-word;">@item.Name</div></td>
 
                             <td style="white-space: pre-line; "><div style="width: 230px; word-wrap: break-word;">@item.ArticleName</div> </td>
-                            <td style="white-space: pre-line; "> <div style="width: 230px; word-wrap: break-word;">@item.BlogSiteTitle</div></td>
+                            <td style="white-space: pre-line; "> <div style="width: 100px; word-wrap: break-word;">@item.BlogSiteTitle</div></td>
                             @if (item.Status == "Posted")
                             {
                                 <td style="white-space: pre-line; "><div style="width: 230px; word-wrap: break-word;"><label class="badge badge-success">@item.Status</label></div></td>
